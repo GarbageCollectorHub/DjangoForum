@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="margin-top: 2rem;">
+    <div class="row center-align">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="card z-depth-4" style="border-radius: 15px; overflow: hidden;">
+                <!-- Header -->
+                <div class="card-content white-text" style="background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); padding: 1.5rem;">
+                    <h4 style="margin: 0; font-weight: 300;">Edit Profile</h4>
+                    {% if user.is_staff %}
+                        <span class="chip purple lighten-1 white-text" style="margin-top: 0.5rem;">Staff</span>
+                    {% endif %}
+                </div>
+
+                <!-- Form -->
+                <div class="card-content" style="padding: 2rem;">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Username -->
+                        <div class="input-field">
+                            <i class="material-icons prefix blue-text">account_circle</i>
+                            <input id="username" type="text" name="username" value="{{ user.username }}" class="validate" required>
+                            <label for="username" class="active">Username</label>
+                            {% if form.username.errors %}
+                                <span class="helper-text red-text">{{ form.username.errors }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="input-field">
+                            <i class="material-icons prefix blue-text">person</i>
+                            <input id="full_name" type="text" name="full_name" value="{{ user.full_name|default_if_none:'' }}">
+                            <label for="full_name" class="active">Full Name (optional)</label>
+                            {% if form.full_name.errors %}
+                                <span class="helper-text red-text">{{ form.full_name.errors }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Birth Date -->
+                        <div class="input-field">
+                            <i class="material-icons prefix blue-text">cake</i>
+                            <input id="birth_date" type="date" name="birth_date" value="{% if user.birth_date %}{{ user.birth_date|date:'Y-m-d' }}{% endif %}">
+                            <label for="birth_date" class="active">Birth Date (optional)</label>
+                            {% if form.birth_date.errors %}
+                                <span class="helper-text red-text">{{ form.birth_date.errors }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Avatar -->
+                        <div class="file-field input-field">
+                            <div class="btn blue waves-effect">
+                                <i class="material-icons left">image</i>
+                                <span>Avatar</span>
+                                <input type="file" name="avatar" accept="image/*">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Choose avatar image">
+                            </div>
+                            {% if form.avatar.errors %}
+                                <span class="helper-text red-text">{{ form.avatar.errors }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="row" style="margin-top: 2rem;">
+                            <div class="col s6">
+                                <button type="submit" class="btn blue waves-effect waves-light btn-large" style="width: 100%; border-radius: 25px;">
+                                    <i class="material-icons left">save</i>Save
+                                </button>
+                            </div>
+                            <div class="col s6">
+                                <a href="{% url 'profile_page' %}" class="btn grey waves-effect waves-light btn-large" style="width: 100%; border-radius: 25px;">
+                                    <i class="material-icons left">arrow_back</i>Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.input-field .prefix ~ input {
+    margin-left: 3rem;
+    width: calc(100% - 3rem);
+}
+.input-field .prefix ~ label {
+    margin-left: 3rem;
+}
+.card {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+.btn-large {
+    height: 48px;
+    line-height: 48px;
+}
+.file-field .btn {
+    border-radius: 8px;
+}
+</style>
+{% endblock %}

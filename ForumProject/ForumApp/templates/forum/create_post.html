@@ -1,0 +1,20 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<h2>Create a post in a category {{ category.title }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Add</button>
+</form>
+
+
+
+
+{% endblock %}

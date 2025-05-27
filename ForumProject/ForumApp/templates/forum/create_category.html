@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h4>Create Category</h4>
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="input-field">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {% if form.title.errors %}
+        <span class="red-text">{{ form.title.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="input-field">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+      {% if form.description.errors %}
+        <span class="red-text">{{ form.description.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <div class="input-field">
+      {{ form.icon.label_tag }}
+      {{ form.icon }}
+      {% if form.icon.errors %}
+        <span class="red-text">{{ form.icon.errors.0 }}</span>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn waves-effect waves-light">Create</button>
+  </form>
+</div>
+{% endblock %}

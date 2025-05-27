@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-content">
+      <h4 class="center-align">Login</h4>
+
+      {% if form.non_field_errors %}
+      <div class="row">
+          <div class=" s12 mb-5">
+              <div class="card-panel red lighten-4">
+                  {% for error in form.non_field_errors %}
+                      <p class="red-text">{{ error }}</p>
+                  {% endfor %}
+              </div>
+          </div>
+      </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="input-field">
+          {{ form.username }}
+          <label for="{{ form.username.id_for_label }}">Username</label>
+          {% for error in form.username.errors %}
+            <span class="red-text">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="input-field">
+          {{ form.password }}
+          <label for="{{ form.password.id_for_label }}">Password</label>
+          {% for error in form.password.errors %}
+            <span class="red-text">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="center-align">
+          <button type="submit" class="btn waves-effect waves-light blue darken-2">
+            Login
+          </button>
+        </div>
+      </form>
+
+      <p class="center-align" style="margin-top: 1rem;">
+        Don't have an account?
+        <a href="{% url 'register_page' %}">Register here</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
